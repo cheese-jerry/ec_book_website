@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}" />
+    <script language="JavaScript" th:src="@{/static/script/vue.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/cart.js}"></script>
+    <base th:href="@{/}">
+</head>
+<body>
+<div class="header">
+    <div class="w">
+        <div class="header-left">
+            <a th:href="@{/index.html}">
+                <img th:src="@{/static/img/logo.gif}" alt=""
+                /></a>
+            <h1>注文内容</h1>
+        </div>
+        <div class="header-right">
+            <h3>ようこそ<span th:text="${session.currUser.uname}">name</span>YYM中古本通販サイト</h3>
+            <div class="order"><a th:href="@{/order.do(operate='getOrderList')}">注文内容</a></div>
+            <div class="destory">
+                <a href="#" th:href="@{/page.do(operate='page',page='user/login')}" class="gohome">ログアウト</a>
+            </div>
+            <div class="gohome">
+                <a href="#" th:href="@{/book.do}" class="gohome">戻る</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="list" id="cart_div">
+    <div class="w">
+        <table>
+            <thead>
+            <tr>
+                <th>写真</th>
+                <th>商品名前</th>
+
+                <th>数</th>
+                <th>単価</th>
+                <th>総額</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="orderItem : ${session.orderItemList}">
+                <td>
+                    <img th:src="@{|/static/uploads/${orderItem.book.bookImg}|}" alt=""/>
+                </td>
+                <td th:text="${orderItem.book.bookName}">活着</td>
+                <td th:text="${orderItem.buyCount}">100</td>
+                <td th:text="${orderItem.book.price}">36.8</td>
+                <td th:text="${orderItem.book.price * orderItem.buyCount}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="footer">
+            <div class="footer-left">
+                <a href="#" th:href="@{/book.do}">ショッピングを続ける</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

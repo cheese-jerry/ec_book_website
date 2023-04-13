@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>注文歴史</title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}" />
+
+    <link rel="stylesheet" th:href="@{/static/css/bookManger.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/orderManger.css}" />
+    <script language="JavaScript" th:src="@{/static/script/order.js}"></script>
+</head>
+<body>
+<div class="header">
+    <div class="w">
+        <div class="header-left">
+            <a href="../index.html">
+                <img th:src="@{/static/img/logo.gif}" alt=""/></a>
+            <h1>我的订单</h1>
+        </div>
+        <div class="header-right">
+            <h3>ようこそ<span th:text="${session.currUser.uname}">名前</span>YYM中古本通販サイト</h3>
+            <div class="order"><a th:href="@{/order.do(operate='getOrderList')}">注文内容</a></div>
+            <div class="destory">
+                <a href="#" th:href="@{/page.do(operate='page',page='user/login')}" class="gohome">ログアウト</a>
+            </div>
+            <div class="gohome">
+                <a href="#" th:href="@{/book.do}" class="gohome">戻る</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="list">
+    <div class="w">
+        <table>
+            <thead>
+            <tr>
+                <th>注文番号</th>
+                <th>注文時間</th>
+                <th>総額</th>
+                <th>注文状況</th>
+                <th>注文詳細</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderBean : ${session.currUser.orderList}" th:object="${orderBean}">
+                <td th:text="*{orderNo}">12354456895</td>
+                <td th:text="*{orderDate}">
+                    2015.04.23
+                </td>
+                <td th:text="*{orderMoney}">90.00</td>
+
+                <td><a href="" class="send">出荷準備中</a></td>
+                <!--<td><a th:href="@{/order.do}">查看详情</a></td>-->
+                <td><button th:onclick="|searchdetail(*{id})|">詳細へ</button></td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="footer">
+            <div class="footer-right">
+                <div>ホームページ</div>
+                <div>前のページ</div>
+                <ul><li class="active">1</li><li>2</li><li>3</li></ul>
+                <div>次のページ</div>
+                <div>最後のページ</div>
+                <!--
+                <span>共10页</span>
+                <span>30条记录</span>
+                -->
+                <span></span>
+                <input type="text">
+                <span>ページ目</span>
+                <button>確定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

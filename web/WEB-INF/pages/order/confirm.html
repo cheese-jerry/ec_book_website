@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" th:href="@{/static/css/minireset.css}" />
+  <link rel="stylesheet" th:href="@{/static/css/common.css}" />
+  <link rel="stylesheet" th:href="@{/static/css/cart.css}" />
+  <script language="JavaScript" th:src="@{/static/script/vue.js}"></script>
+  <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+  <script language="JavaScript" th:src="@{/static/script/cart.js}"></script>
+  <base th:href="@{/}">
+</head>
+<body>
+<div class="header">
+  <div class="w">
+    <div class="header-left">
+      <a th:href="@{/index.html}">
+        <img th:src="@{/static/img/logo.gif}" alt=""
+        /></a>
+      <h1>注文確認</h1>
+    </div>
+    <div class="header-right">
+      <h3>ようこそ<span th:text="${session.currUser.uname}">name</span>YYM中古本通販サイト</h3>
+      <div class="order"><a th:href="@{/order.do(operate='getOrderList')}">注文歴史</a></div>
+      <div class="destory">
+        <a href="#" th:href="@{/page.do(operate='page',page='user/login')}" class="gohome">ログアウト</a>
+      </div>
+      <div class="gohome">
+        <a href="#" th:href="@{/cart.do}" class="gohome">戻る</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="list" id="cart_div">
+  <div class="w">
+    <table>
+      <thead>
+      <tr>
+        <th>写真</th>
+        <th>商品名</th>
+
+        <th>数</th>
+        <th>単価</th>
+        <th>総額</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr th:each="cartItem : ${session.currUser.cart.cartItemMap.values()}">
+        <td>
+          <img th:src="@{|/static/uploads/${cartItem.book.bookImg}|}" alt=""/>
+        </td>
+        <td th:text="${cartItem.book.bookName}">本の名前</td>
+        <td th:text="${cartItem.buyCount}"></td>
+        <td th:text="${cartItem.book.price}">36.8</td>
+        <td th:text="${cartItem.book.price * cartItem.buyCount}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="footer">
+      <div class="footer-right">
+        <div>合計<span th:text="${session.currUser.cart.getTotalCount()}"></span>件商品</div>
+        <div class="total-price">総額<span th:text="${session.currUser.cart.getTotalMoney()}"></span>JPY</div>
+        <a class="pay" th:href="@{/order.do(operate='checkout')}">支払い手続きへ</a> <!-- payAndAddressPage-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
